@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <TextCom/>
-      <Text>Hello Wjef4455jdfbksb</Text>
+      <Text>Hello world</Text>
       <StatusBar style="auto" />
     </View>
   );
