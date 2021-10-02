@@ -5,15 +5,11 @@ import { TextCom } from './App/components/textComponent';
 import {NavigationContainer} from '@react-navigation/native';
 import Tabs from './App/components/tabs';
 
-
-
 export default function App() {
   return (
     <NavigationContainer>
       <Tabs/>
     </NavigationContainer>
-
-    
   );
 }
 
