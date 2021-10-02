@@ -3,18 +3,34 @@ import React from 'react';
 import Chatscreen from '../../Screens/ChatScreen';
 import HomeScreen from '../../Screens/HomeScreen';
 import SettingScreen from '../../Screens/SettingScreen';
+import { Icon } from 'react-native-elements'
+import { Ionicons} from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
         
 const Tabs = (props) => {
   return(
-    <Tab.Navigator screenOptions={ {tabBarIcon: ()=>null} }>
-        <Tab.Screen name = "Home" component = {HomeScreen}
-         />
-        <Tab.Screen name = "Setting" component = {SettingScreen} />
-        <Tab.Screen name = "Chat" component = {Chatscreen}/>
-        
+    <Tab.Navigator screenOptions={({ route }) => ({tabBarIcon: ({ focused, color, size }) => {
+      let iconName;
+      if (route.name === 'Home') {
+          iconName = focused
+            ? 'home-outline'
+            : 'home-sharp';
+      } 
+      else if (route.name === 'Profile') {
+          iconName = focused ? 'person-circle-outline' : 'person-circle';
+      }
+      else if(route.name == 'Chat'){
+        iconName = focused ? 'chatbox-ellipses' : 'chatbox';
+      }
 
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: 'tomato',
+      tabBarInactiveTintColor: 'gray', })}>
+      <Tab.Screen name = "Profile" component = {SettingScreen} />
+      <Tab.Screen name = "Home" component = {HomeScreen}/>
+      <Tab.Screen name = "Chat" component = {Chatscreen}/>
     </Tab.Navigator> 
   );
 
