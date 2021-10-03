@@ -9,11 +9,19 @@ import Tabs from './App/components/tabs';
 
 export default function App() {
   return (
+<<<<<<< HEAD
     <NavigationContainer>
       <Tabs/>
     </NavigationContainer>
 
     
+=======
+    <View style={styles.container}>
+      <TextCom/>
+      <Text>Hello Wjef4455jdfbksb</Text>
+      <StatusBar style="auto" />
+    </View>
+>>>>>>> upstream/master
   );
 }
 
