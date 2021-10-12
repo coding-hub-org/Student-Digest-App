@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet} from 'react-native';
-
+import {View, Text, Button, StyleSheet} from 'react-native';
+import {SettingsIcon} from "../App/components/settingsicon";
 
 
 const Settingscreen =({navigation}) => {
     return (
     <View style = {styles.container}> 
-    
+        <SettingsIcon/>                
         <Text> Setting Screen</Text>
         <Button 
           title = "Click This"
