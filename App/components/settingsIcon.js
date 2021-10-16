@@ -1,23 +1,21 @@
 import React from "react";
 import {Text,View,Button,Alert,TouchableOpacity,StyleSheet} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
-export const SettingsIcon = () => {
+export const SettingsIcon = ({navigation}) => {
     return(
-        <TouchableOpacity onPress={() => Alert.alert('Settings was pressed!')} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate("Settings")} style={styles.button}>
             <Ionicons name="settings-outline" size={30} color="black" />
-            <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>
     );
 }
-const styles = StyleSheet.create({
 
+const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
       justifyContent: 'center',
     },
-
     buttonText: {
       color: "black"
     }
