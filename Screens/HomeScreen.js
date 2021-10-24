@@ -9,7 +9,7 @@ const Homescreen =({navigation}) => {
         <Text> Home Screen</Text>
         <Button 
           title = "Click This"
-          onPress ={() => alert('Hello')}
+          onPress ={() => navigation.navigate("SeeMore")}
           />
     </View>
     );
