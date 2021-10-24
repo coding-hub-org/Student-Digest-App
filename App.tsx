@@ -7,7 +7,7 @@ import Tabs from './App/components/tabs';
 import { SignupScreen } from './App/screens/signupScreen';
 
 const firstLogin = <SignupScreen/>;
-const temp = false;
+const temp = true;
 
 export default function App() {
   return temp ? firstLogin : (
