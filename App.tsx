@@ -12,7 +12,7 @@ import { SeeMoreScreen } from './App/screens/seeMoreScreen';
 const Stack = createNativeStackNavigator();
 
 const firstLogin = <SignupScreen/>;
-const temp = false;
+const temp = true;
 
 export default function App() {
   return temp ? firstLogin : (
