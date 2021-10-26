@@ -11,6 +11,17 @@ export const SignupScreen = () =>{
     const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
     const [name, onChangeName] = React.useState("");
+    const [eye,setEye] = React.useState(<Ionicons name="eye-off" size={25} color="black" />)
+    const changeEye = () => {
+      if(hidePassword != true){
+        setEye(<Ionicons name="eye-off" size={25} color="black" />)
+        hidePassword = true;
+      }
+      else{
+        setEye(<Ionicons name="eye" size={25} color="black" />)
+        hidePassword = false;
+      }
+    }
     return(
         <SafeAreaView style = {styles.safearea}>
           <Image source={require('../../assets/logo.png')} style = {styles.imageStyle} />
@@ -36,10 +47,8 @@ export const SignupScreen = () =>{
           />
 
           {/*eye button*/}
-          <TouchableOpacity onPress={() => {
-            return (<Ionicons name="eye" size={24} color="black" />)
-          }} style={styles.eye}>
-            <Ionicons name="eye-off" size={25} color="black" />
+          <TouchableOpacity onPress={changeEye} style={styles.eye}>
+            {eye}
           </TouchableOpacity>
           </View>
 
@@ -84,7 +93,7 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
-      color: "white",
+      color: "#FFFFFF",
       fontWeight: "bold",
     },
 
