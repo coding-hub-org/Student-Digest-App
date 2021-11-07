@@ -8,8 +8,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
     "@react-navigation/bottom-tabs": "^6.0.7",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.4",
@@ -30,7 +28,7 @@
     "react-navigation": "^4.4.4"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0",
+    "@babel/core": "^7.13.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "typescript": "~4.0.0"

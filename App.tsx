@@ -12,7 +12,8 @@ import { SeeMoreProfile } from './Screens/seeMoreProfile';
 
 const Stack = createNativeStackNavigator();
 
-
+const firstLogin = <SignupScreen/>;
+const temp = true;
 
 export default function App() {
   return (
