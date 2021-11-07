@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import { Avatar, Title,Caption, TouchableRipple } from 'react-native-paper';
 import {SettingsIcon} from "../App/components/settingsIcon";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,10 +14,13 @@ const Settingscreen =({navigation}) => {
      <SafeAreaView style = {styles.container}>
        <View style={styles.userInfoSection}>   
         <View style = {{flexDirection: 'row', marginTop: 15}}>
-             <Avatar.Image
+           
+        <TouchableOpacity onPress={() => navigation.navigate("Profiles")} navigation={navigation}>
+             <Avatar.Image 
+              navigation = {navigation} 
               source={imageUrl?{'uri':imageUrl}:avatarPicture}
-              size = {80}
-              />
+              size = {80}/>
+        </TouchableOpacity>
               <View style={{marginLeft: 20}}>
                   <Title style={ [styles.title, { 
                       marginTop: 15,
@@ -29,8 +32,8 @@ const Settingscreen =({navigation}) => {
         <SettingsIcon style={styles.button} navigation={navigation}/>
       </View>
       <View style ={styles.userInfoSection}>
-          <View style = {styles.row}>
-              <Text> Hello world </Text>
+          <View style = {styles}>
+              <Text> Hello worldss </Text>
      </View> 
      </View>
     </SafeAreaView>
