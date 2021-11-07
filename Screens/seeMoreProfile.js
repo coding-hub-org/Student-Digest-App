@@ -59,7 +59,7 @@ export const SeeMoreProfile = ({ navigation }) => {
   const renderRow = (images) => {
     return images.map((uri, i) => {
       return (
-        <TouchableOpacity>
+        <TouchableOpacity key={i}>
           <Image
             key={i}
             style={[styles.item, calculatedSize()]}
