@@ -18,11 +18,12 @@ const temp = true;
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TABS">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name = "TABS" component= {Tabs} options={{headerShown: false}}/>
         <Stack.Screen name = "Settings" component={SettingsScreen}/>
         <Stack.Screen name = "SeeMore" component={SeeMoreScreen}/>
         <Stack.Screen name = "Profiles" component ={SeeMoreProfile}/>
+        <Stack.Screen name = "Login" component = {SignupScreen}/>
       </Stack.Navigator>
       
     </NavigationContainer>
