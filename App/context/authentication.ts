@@ -1,16 +1,17 @@
 import React from 'react';
-
+import auth from '@react-native-firebase/auth';
 class AuthManager{
     private user: object|null;
     private isAuthenticated: boolean;
-    constructor(user?:object){
-        if (user){
-            this.isAuthenticated=true;
-            this.user=user;
-        }else{
-            this.isAuthenticated=false;
-            this.user=null;
-        }
+    private Auth: any;
+    constructor(Auth?:any){
+        if (Auth)
+            this.Auth=Auth;
+        else
+            this.Auth = auth();
+        
+        this.isAuthenticated=false;
+        this.user=null;
     }
     private authenticate = (user:object) => {
         this.user=user;
@@ -20,28 +21,28 @@ class AuthManager{
         this.user=null;
         this.isAuthenticated=false;
     }
-    doSignIn = (username:string, password:string) => {
+    doSignIn = async(username:string, password:string) => {
         try{
-            //TODO
+            await auth().createUserWithEmailAndPassword(username,password);
             this.authenticate({});
         }catch(error){
             this.deAuthenticate();
         }
     }
-    doSignOut = () => {
-        //TODO
+    doSignOut = async() => {
+        await this.Auth.signOut();
         this.deAuthenticate();
     }
-    doChangePassword = (username: string, oldPassword:string, newPassword:string) => {
+    doChangePassword = async(username: string, oldPassword:string, newPassword:string) => {
         try{
             //TODO
         }catch(error){
 
         }
     }
-    doSignUp = () => {
+    doSignUp = async(username:string, password:string) => {
         try{
-            
+            await this.Auth.createUserWithEmailAndPassword(username,password);
         }catch(error){
 
         }
@@ -54,4 +55,4 @@ class AuthManager{
     }
 }
 export {AuthManager}
-export default React.createContext({authManager:AuthManager});
+export default React.createContext({isAuth: false, authManager:new AuthManager()});
