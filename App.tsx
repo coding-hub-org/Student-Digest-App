@@ -12,9 +12,6 @@ import { SeeMoreProfile } from './Screens/seeMoreProfile';
 
 const Stack = createNativeStackNavigator();
 
-const firstLogin = <SignupScreen/>;
-const temp = true;
-
 export default function App() {
   return (
     <NavigationContainer>
@@ -23,7 +20,7 @@ export default function App() {
         <Stack.Screen name = "Settings" component={SettingsScreen}/>
         <Stack.Screen name = "SeeMore" component={SeeMoreScreen}/>
         <Stack.Screen name = "Profiles" component ={SeeMoreProfile}/>
-        <Stack.Screen name = "Login" component = {SignupScreen}/>
+        <Stack.Screen name = "Login" component = {SignupScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
       
     </NavigationContainer>

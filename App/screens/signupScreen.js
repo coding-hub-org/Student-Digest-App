@@ -1,13 +1,14 @@
 import React from "react";
-import { Text,View,SafeAreaView, StyleSheet,TextInput,Dimensions,Button,TouchableOpacity, Image, } from "react-native";
+import { Text,View,SafeAreaView, StyleSheet,TextInput,Dimensions,Button,TouchableOpacity, Image, KeyboardAvoidingView,Platform} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 let hidePassword = true;// true hides the password, false shows it
 
-export const SignupScreen = () =>{
+export const SignupScreen = ({navigation}) =>{
     const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
     const [name, onChangeName] = React.useState("");
@@ -23,6 +24,10 @@ export const SignupScreen = () =>{
       }
     }
     return(
+      <KeyboardAwareScrollView
+            resetScrollToCoords={{ x: 0, y: 10}}
+            scrollEnabled={true}
+          >
         <SafeAreaView style = {styles.safearea}>
           <Image source={require('../../assets/logo.png')} style = {styles.imageStyle} />
           <View style = {styles.inputView}>
@@ -53,62 +58,62 @@ export const SignupScreen = () =>{
           </View>
 
           {/*sign up button*/}
-          <TouchableOpacity onPress={() => {}} style={styles.button}>
+          <TouchableOpacity onPress={() => navigation.navigate("TABS")} style={styles.button}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
         </SafeAreaView>
+        </KeyboardAwareScrollView>
     );
 }
 
 
 const styles = StyleSheet.create({
 
-    safearea: {
-      flex: 1,
-      alignItems: 'center',
-    },
+  safearea: {
+    flex: 1,
+    alignItems: 'center',
+  },
 
-    input: {
-      height: 50,
-      width: windowWidth - 50,
-      margin: 10,
-      borderBottomWidth: StyleSheet.hairlineWidth
-      
-    },
+  input: {
+    height: 50,
+    width: windowWidth - 50,
+    margin: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "grey"
+  },
 
-    eye:{
-      
-    },
+  eye:{
     
-    button: {
-      margin: 12,
-      backgroundColor: "#BC0012",
-      height: 20,
-      width: "95%",
-      padding: 20,
-      borderRadius: 10,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: "auto",
-    },
+  },
+  
+  button: {
+    margin: 12,
+    backgroundColor: "#BC0012",
+    height: 40,
+    width: "95%",
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: "auto",
+  },
 
-    buttonText: {
-      color: "#FFFFFF",
-      fontWeight: "bold",
-    },
+  buttonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+  },
 
-    imageStyle: {
-      display: "flex",
-      alignItems: "center",
+  imageStyle: {
+    display: "flex",
+    alignItems: "center",
 
-      width: "100%",
-      resizeMode: "contain", 
-      justifyContent: "center",
-      marginBottom: "auto",
-      margin: 40,
-    },
+    width: "100%",
+    resizeMode: "contain", 
+    justifyContent: "center",
+    marginBottom: "auto",
+    margin: 40,
+  },
 
-    inputView: {
-      marginBottom: 150,
-    }
-  });
+  inputView: {
+    marginBottom: 150,
+  }
+});
