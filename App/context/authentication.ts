@@ -1,15 +1,21 @@
 import React from 'react';
+import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
+import firebaseConfig from '../firebaseconfig';
 class AuthManager{
     private user: object|null;
     private isAuthenticated: boolean;
     private Auth: any;
     constructor(Auth?:any){
+        
         if (Auth)
             this.Auth=Auth;
-        else
-            this.Auth = auth();
-        
+        else{
+            let app = firebase.initializeApp(firebaseConfig).then((app)=>{
+                
+                this.Auth = auth(app);
+            });    
+        }
         this.isAuthenticated=false;
         this.user=null;
     }

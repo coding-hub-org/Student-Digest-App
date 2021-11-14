@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { Text,View,SafeAreaView, StyleSheet,TextInput,Dimensions,Button,TouchableOpacity, Image, KeyboardAvoidingView,Platform} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
+import AuthContext from '../context/authentication';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -12,17 +12,21 @@ export const SignupScreen = ({navigation}) =>{
     const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
     const [name, onChangeName] = React.useState("");
-    const [eye,setEye] = React.useState(<Ionicons name="eye-off" size={25} color="black" />)
-    const changeEye = () => {
-      if(hidePassword != true){
-        setEye(<Ionicons name="eye-off" size={25} color="black" />)
-        hidePassword = true;
-      }
-      else{
-        setEye(<Ionicons name="eye" size={25} color="black" />)
-        hidePassword = false;
+    const [hidePassword, setHidePassword] = useState(true);
+    const [loading,setLoading] = useState(false);
+    const {isAuth, authManager} = useContext(AuthContext);
+    const handleLogin = ()=>{
+      if (!loading)
+      {
+        setLoading(true);
+        authManager.doSignIn(email,password);
+        setLoading(false);
       }
     }
+    useEffect(()=>{
+      if (isAuth)
+      navigation.navigate("TABS");
+    },[isAuth]);
     return(
       <KeyboardAwareScrollView
             resetScrollToCoords={{ x: 0, y: 10}}
@@ -52,13 +56,13 @@ export const SignupScreen = ({navigation}) =>{
           />
 
           {/*eye button*/}
-          <TouchableOpacity onPress={changeEye} style={styles.eye}>
-            {eye}
+          <TouchableOpacity onPress={()=>{setHidePassword(prev=>!prev)}} style={styles.eye}>
+            {hidePassword?(<Ionicons name="eye-off" size={25} color="black" />):(<Ionicons name="eye" size={25} color="black" />)}
           </TouchableOpacity>
           </View>
 
           {/*sign up button*/}
-          <TouchableOpacity onPress={() => navigation.navigate("TABS")} style={styles.button}>
+          <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
         </SafeAreaView>
