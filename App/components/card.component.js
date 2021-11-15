@@ -22,12 +22,12 @@ return(
 const styles = StyleSheet.create({
     cardStyle: {
         borderRadius: 20,
-        marginBottom: 10,
+        marginBottom: 15,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.8,
         shadowRadius: 3,
-        elevation: 15,
+        elevation: 5,
     },
     test:{
         height: 200,

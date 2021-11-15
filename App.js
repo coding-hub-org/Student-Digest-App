@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from "react"
 import { StyleSheet, Text, View } from 'react-native';
-import { TextCom } from './App/components/textComponent';
 import {NavigationContainer} from '@react-navigation/native';
 import Tabs from './App/components/tabs';
 import { SignupScreen } from './App/screens/signupScreen';
@@ -9,6 +8,24 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SettingsScreen } from './App/screens/settingScreen';
 import { SeeMoreScreen } from './App/screens/seeMoreScreen';
 import { SeeMoreProfile } from './Screens/seeMoreProfile';
+
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC1UFuv_3Wovsm6xRI0c8n0yOJCxrx3odg",
+  authDomain: "student-digest-app.firebaseapp.com",
+  databaseURL: "https://student-digest-app-default-rtdb.firebaseio.com",
+  projectId: "student-digest-app",
+  storageBucket: "student-digest-app.appspot.com",
+  messagingSenderId: "94057697013",
+  appId: "1:94057697013:web:48b4f04b2ad39e4e623fbc",
+  measurementId: "G-S76LZ12738"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +39,6 @@ export default function App() {
         <Stack.Screen name = "Profiles" component ={SeeMoreProfile}/>
         <Stack.Screen name = "Login" component = {SignupScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
-      
     </NavigationContainer>
 
     
