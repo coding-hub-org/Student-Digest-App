@@ -13,7 +13,7 @@ return(
             <Card.Cover source={{ uri: img }} style={styles.test}/>
             <Card.Content>
                 <Title>{name}</Title>
-                <Paragraph>{des}</Paragraph>
+                <Paragraph>{des.slice(0,50).replace(/(\r\n|\n|\r)/gm, "") + "..."}</Paragraph>
             </Card.Content>
         </Card>
     </View>);
