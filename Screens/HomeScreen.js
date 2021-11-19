@@ -42,9 +42,10 @@ const Homescreen = ({navigation}) => {
       temp.push(doc.data());
     });
     setItemsArray(temp);
+    setLoading(false);
   }
   React.useEffect(() => {
-    fecthData().then(setLoading(false));
+    fecthData();
     return () => {};
   }, []);
 
@@ -66,7 +67,7 @@ const Homescreen = ({navigation}) => {
   return(
     <ScrollView>
       <View style = {styles.container}>
-        {makeCards()}
+        {isLoading ? <ActivityIndicator size="large" color="#de706f" /> : makeCards()}
       </View>
     </ScrollView>
   );

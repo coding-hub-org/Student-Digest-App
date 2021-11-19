@@ -11,65 +11,39 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
-  Animated
+  Animated,
+  ActivityIndicator
 } from "react-native";
 import { Overlay } from "react-native-elements";
-import { overlay } from "react-native-paper";
+import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 
+const storage = getStorage();
 
+const listRef = ref(storage, 'profilePhotos/');
 
 const windowWidth = Dimensions.get('window').width;
 const windowHieght = Dimensions.get('window').height;
 
 export const SeeMoreProfile = ({ navigation }) => {
-  const images = [
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-    "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-    "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-  ];
+  const [images,setImages] = React.useState([]);
+  const [isLoading, setLoading] = React.useState(true);
 
-  const createTwoButtonAlert = () =>
-    Alert.alert(
-      "Change my profile photo to this photo?",
-      "",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
+
+  const fecthProfilePhotos = async () => {
+    try{
+      let itemRefList = await listAll(listRef);
+      console.log("itemRefList");
+      console.log(itemRefList);
+      let temp = await Promise.all(itemRefList.items.map(async (itemRef)=>await getDownloadURL(itemRef)));
+      setImages(temp);
+    }catch(error){
+      setImages([]);
+      console.log(error);
+    }
+    
+  }
+
+  
   const [visible, setIsVisible] = useState(false);
   const [imageUri, setImageUri] = useState("");
 
@@ -102,15 +76,6 @@ export const SeeMoreProfile = ({ navigation }) => {
       );
     });
   };
-  const renderImagesInGroupsOf = (count) => {
-    return _.chunk(IMAGE_URLS, IMAGES_PER_ROW).map((imagesForRow, i) => {
-      return (
-        <View style={styles.row} key={i}>
-          {this.renderRow(imagesForRow)}
-        </View>
-      );
-    });
-  };
 
   const fadeAnim = useRef(new Animated.Value(0)).current
   const fadeIn = () => {
@@ -122,10 +87,15 @@ export const SeeMoreProfile = ({ navigation }) => {
     }).start();
   };
 
+  React.useEffect(() => {
+    fecthProfilePhotos().then(() => {setLoading(false);});
+    console.log(images);
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.style_view}>
-        {renderRow(images)}
+        {images &&  isLoading ? <ActivityIndicator size="large" color="#de706f" /> : renderRow(images)}
           <Overlay isVisible={visible} onBackdropPress={() => toggleOverlay("")} backdropStyle={styles.overlayWhole}>
             <Animated.View style={{opacity:fadeAnim}}>
               <Text style={styles.overlayText}>Change profile picture to this photo?</Text>
