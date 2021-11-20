@@ -48,9 +48,9 @@ export const SeeMoreProfile = ({ navigation }) => {
   const [imageUri, setImageUri] = useState("");
 
   const toggleOverlay = (link) => {
-    setImageUri(link)
-    setIsVisible(!visible)
-  }
+    setImageUri(link);
+    setIsVisible(!visible);
+  };
 
   const windowWidth = Dimensions.get("window").width;
   var IMAGES_PER_ROW = 2;
@@ -62,11 +62,13 @@ export const SeeMoreProfile = ({ navigation }) => {
   const renderRow = (images) => {
     return images.map((uri, i) => {
       return (
-        <TouchableOpacity key={i} onPress={() => {
-          toggleOverlay(String(uri));
-          fadeIn();
-
-        }}>
+        <TouchableOpacity
+          key={i}
+          onPress={() => {
+            toggleOverlay(String(uri));
+            fadeIn();
+          }}
+        >
           <Image
             key={i}
             style={[styles.item, calculatedSize()]}
@@ -77,13 +79,13 @@ export const SeeMoreProfile = ({ navigation }) => {
     });
   };
 
-  const fadeAnim = useRef(new Animated.Value(0)).current
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 1500,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
   };
 
@@ -149,11 +151,10 @@ const styles = StyleSheet.create({
     width: windowWidth - 50,
     marginTop: 10,
     borderRadius: 10,
-    
   },
   overlayText: {
     color: "black",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   overlayViewStyle: {
     display: "flex",
@@ -163,10 +164,7 @@ const styles = StyleSheet.create({
   overlayButton: {
     marginTop: 10,
     marginRight: 25,
-    marginLeft: 15
+    marginLeft: 15,
   },
-  overlayWhole: {
-    
-  }
-
+  overlayWhole: {},
 });
