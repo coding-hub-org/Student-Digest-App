@@ -14,6 +14,9 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
+import Toast from 'react-native-toast-message';
+
+
 LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 
 const firebaseConfig = {
@@ -42,6 +45,7 @@ export default function App() {
         <Stack.Screen name = "Profiles" component ={SeeMoreProfile}/>
         <Stack.Screen name = "Login" component = {SignupScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
+      <Toast />
     </NavigationContainer>
   );
 }

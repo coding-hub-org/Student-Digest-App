@@ -5,6 +5,8 @@ import HomeScreen from '../../Screens/HomeScreen';
 import SettingScreen from '../../Screens/SettingScreen';
 import { Icon } from 'react-native-elements'
 import { Ionicons} from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
+
 const Tab = createBottomTabNavigator();
 
         

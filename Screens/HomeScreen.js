@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet,ScrollView, ActivityIndicator} from 'react-native';
+import { View, Text, Button, StyleSheet,ScrollView, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {MyButton} from '../App/components/dummyButton';
 import { Cards } from '../App/components/card.component';
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore"
@@ -8,6 +8,9 @@ import {API_KEY,MSI,APP_ID} from "@env";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const firebaseConfig = {
   apiKey: '${API_KEY}',
