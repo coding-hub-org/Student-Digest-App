@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 
 const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const Settingscreen = ({ navigation }) => {
 
@@ -154,7 +155,7 @@ const Settingscreen = ({ navigation }) => {
       </View>
       <Title>Saved Digest</Title>
       <ScrollView horizontal = {true} style = {styles.scrollViewStyle} contentContainerStyle={styles.ctcs}>
-        <Text></Text>
+        {/* <Text></Text> */}
         {makeCards()}
       </ScrollView>
     </SafeAreaView>
@@ -166,8 +167,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: -30,
-    backgroundColor: "white"
+    paddingTop: - (windowHeight/30),
+    //paddingBottom: - (windowHeight/30),
+    backgroundColor: "#FAF9F6",
   },
   userInfoSection: {
     paddingHorizontal: 30,
@@ -193,17 +195,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 3,
     elevation: 5,
-    width: 250,
+    width: 300,
     margin: 10,
-    height: 210,
+    height: windowHeight / 3,
 },
   test: {
-    height: 100,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20
   },
   scrollViewStyle: {
-    marginTop: 10,
+    //marginTop: 10,
     backgroundColor: "white",
     width: "100%",
     elevation: 5,
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
   },
   ctcs: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "flex-start"
   },
   viewtester: {
     marginTop: 10,
