@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 export const SettingsIcon = ({navigation}) => {
     return(
         <TouchableOpacity onPress={() => navigation.navigate("Settings")} style={styles.button}>
-            <Ionicons name="settings-outline" size={30} color="black" />
+            <Ionicons name="settings-outline" size={30} color="grey" />
         </TouchableOpacity>
     );
 }
@@ -15,8 +15,9 @@ const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
       justifyContent: 'center',
+      margin: 10
     },
     buttonText: {
-      color: "black"
+      color: "grey"
     }
   });
