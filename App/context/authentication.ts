@@ -1,57 +1,50 @@
 import React from 'react';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
-class AuthManager{
-    private user: object|null;
-    private isAuthenticated: boolean;
-    constructor(user?:object){
-        if (user){
-            this.isAuthenticated=true;
-            this.user=user;
-        }else{
-            this.isAuthenticated=false;
-            this.user=null;
-        }
-    }
-    private authenticate = (user:object) => {
-        this.user=user;
-        this.isAuthenticated=true;
-    }
-    private deAuthenticate = () => {
-        this.user=null;
-        this.isAuthenticated=false;
-    }
-    doSignIn = (username:string, password:string) => {
-        try{
-            //TODO
-            this.authenticate({});
-        }catch(error){
-            this.deAuthenticate();
-        }
-    }
-    doSignOut = () => {
-        //TODO
-        this.deAuthenticate();
-    }
-    doChangePassword = (username: string, oldPassword:string, newPassword:string) => {
-        try{
-            //TODO
-        }catch(error){
 
-        }
-    }
-    doSignUp = () => {
+const doSignIn = (onSucess?:Function, onFail?:Function) =>{
+    return async(email:string, password:string) =>{
         try{
-            
+            let credential = await firebase.auth().signInWithEmailAndPassword(email,password);
+            if (onSucess) onSucess(credential);
         }catch(error){
-
-        }
-    }
-    getAuthenticationState = ():{isAuthenticated:boolean, user:object|null} =>{
-        return {
-            isAuthenticated: this.isAuthenticated,
-            user: this.user
-        }
+            console.log(error);
+            if (onFail) onFail();
+        }  
     }
 }
-export {AuthManager}
-export default React.createContext({authManager:AuthManager});
+
+const doSignUp = (onSucess?:Function, onFail?:Function) =>{
+    return async(email:string, password:string) =>{
+        try{
+            let credential = await firebase.auth().createUserWithEmailAndPassword(email,password);
+            if (onSucess) onSucess(credential);
+        }catch(error){
+            console.log(error);
+            if (onFail) onFail();
+        }  
+    }
+}
+
+const doSignOut = (onSucess?:Function, onFail?:Function) =>{
+    return async(email:string, password:string) =>{
+        try{
+            await firebase.auth().signOut();
+            if (onSucess) onSucess();
+        }catch(error){
+            console.log(error);
+            if (onFail) onFail();
+        }  
+    }
+}
+export {doSignIn, doSignUp, doSignOut}
+export default React.createContext(
+    {
+        isAuthed:false,
+        signIn:()=>{},
+        signUp:()=>{},
+        signOut:()=>{}
+    });
+
