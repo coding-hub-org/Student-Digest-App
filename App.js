@@ -9,7 +9,7 @@ import { SettingsScreen } from './App/screens/settingScreen';
 import { SeeMoreScreen } from './App/screens/seeMoreScreen';
 import { SeeMoreProfile } from './Screens/seeMoreProfile';
 import {API_KEY,MSI,APP_ID} from "@env";
-
+import AuthenticationContext, { doSignIn, doSignOut, doSignUp } from './App/context/authentication';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -35,7 +35,7 @@ firebase.initializeApp(firebaseConfig);
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -48,6 +48,26 @@ export default function App() {
       <Toast />
     </NavigationContainer>
   );
+}
+
+export default function AuthenticatingApp(){
+  const [isAuthed, setAuthed] = useState(false);
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      console.log('user is logged');
+      setAuthed(true);
+    }
+  });
+  return(
+    <AuthenticationContext.Provider
+      isAuthed= {isAuthed}
+      signIn =  {doSignIn(()=>{setAuthed(true)})}
+      signUp = {doSignUp()}
+      signOut = {doSignOut(()=>{setAuthed(false)})}
+    >
+      <App/>
+    </AuthenticationContext.Provider>
+  )
 }
 
 const styles = StyleSheet.create({
