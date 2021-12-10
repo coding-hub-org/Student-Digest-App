@@ -1,11 +1,24 @@
 import React from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import {API_KEY,MSI,APP_ID} from "@env";
 import 'firebase/compat/firestore';
 
+const firebaseConfig = {
+    apiKey: `${API_KEY}`,
+    authDomain: "student-digest-app.firebaseapp.com",
+    databaseURL: "https://student-digest-app-default-rtdb.firebaseio.com",
+    projectId: "student-digest-app",
+    storageBucket: "student-digest-app.appspot.com",
+    messagingSenderId: `${MSI}`,
+    appId: `${APP_ID}`,
+    measurementId: "${config.measurementId}"
+};
+  
+firebase.initializeApp(firebaseConfig);
 
-const doSignIn = (onSucess?:Function, onFail?:Function) =>{
-    return async(email:string, password:string) =>{
+const doSignIn = (onSucess, onFail) =>{
+    return async(email, password) =>{
         try{
             let credential = await firebase.auth().signInWithEmailAndPassword(email,password);
             if (onSucess) onSucess(credential);
@@ -16,11 +29,13 @@ const doSignIn = (onSucess?:Function, onFail?:Function) =>{
     }
 }
 
-const doSignUp = (onSucess?:Function, onFail?:Function) =>{
-    return async(email:string, password:string) =>{
+const doSignUp = (onSucess, onFail) =>{
+    return async(email, password, name) =>{
         try{
             let credential = await firebase.auth().createUserWithEmailAndPassword(email,password);
-            if (onSucess) onSucess(credential);
+            if (onSucess) {
+                onSucess(email,name);
+            }
         }catch(error){
             console.log(error);
             if (onFail) onFail();
@@ -28,8 +43,8 @@ const doSignUp = (onSucess?:Function, onFail?:Function) =>{
     }
 }
 
-const doSignOut = (onSucess?:Function, onFail?:Function) =>{
-    return async(email:string, password:string) =>{
+const doSignOut = (onSucess, onFail) =>{
+    return async() =>{
         try{
             await firebase.auth().signOut();
             if (onSucess) onSucess();

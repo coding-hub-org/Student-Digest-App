@@ -16,6 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import avatarPicture from "../assets/avatar.png";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import { getAuth } from "firebase/auth";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -24,6 +25,11 @@ const Settingscreen = ({ navigation }) => {
 
   const isFocused = useIsFocused();
   const [localStorage, SetLocalStorage] = React.useState([]);
+
+  const [username, setUsername] = React.useState("");
+  const [icon, setIcon] = React.useState("https://www.plattsburgh.edu/files/307/images/new-burghy-p-logo.png")
+
+
 
   const refresh = () => {
     fetchFromLocalStorage().then((val) => {
@@ -101,11 +107,27 @@ const Settingscreen = ({ navigation }) => {
     });
   }
 
+  const setUserCred = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if(user !== null){
+      const displayName = user.displayName;
+      const photoURL = user.photoURL;
+      setUsername(displayName);
+      setIcon(photoURL);
+      console.log(user.uid, "<------");
+      console.log(user.displayName, "<------");
+    }
+  }
+
 
   React.useEffect(() => {
     fetchFromLocalStorage().then((val) => {
       SetLocalStorage(val);
     });
+    setUserCred();
+    console.log(username, "<------");
+    console.log(icon, "<------");
     return () => {};
   }, [isFocused]);
 
@@ -125,25 +147,22 @@ const Settingscreen = ({ navigation }) => {
             <View style={styles.profileCircle}>
               <Avatar.Image
                 navigation={navigation}
-                source={imageUrl ? { uri: imageUrl } : avatarPicture}
-                size={100}
+                source={{ uri: icon }}
+                size={145}
                 marginLeft={0}
               />
             </View>
           </TouchableOpacity>
-          <View style={{ marginLeft: 0 }}>
+          <View style={{ marginLeft: 0, justifyContent: 'center', alignItems: 'center', }}>
             <Title
               style={[
                 styles.title,
                 {
                   marginTop: 30,
-                  marginBottom: 0,
-                  marginRight: 0,
-                  marginLeft: 0,
                 },
               ]}
             >
-              Eric Monestime{" "}
+              {username}
             </Title>
             <View>
               <Caption> @ Plattsburgh </Caption>
@@ -181,7 +200,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   profileCircle: {
-    marginLeft: windowWidth / 15,
+    //marginLeft: windowWidth / 15,
   },
   Settingview: {
     display: "flex",
@@ -197,11 +216,12 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: 300,
     margin: 10,
-    height: windowHeight / 3,
+    height: windowHeight / 3.8,
 },
   test: {
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20
+    borderTopRightRadius: 20,
+    height: windowHeight / 7.4,
   },
   scrollViewStyle: {
     //marginTop: 10,

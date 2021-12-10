@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useContext, useEffect} from "react";
 import { Text,View,SafeAreaView, StyleSheet,TextInput,Dimensions,Button,TouchableOpacity, Image, KeyboardAvoidingView,Platform, ActivityIndicator} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -9,20 +9,26 @@ const windowHeight = Dimensions.get('window').height;
 
 let hidePassword = true;// true hides the password, false shows it
 
-export const SignupScreen = ({navigation}) =>{
+export const LoginScreen = ({navigation}) =>{
     const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
     const [name, onChangeName] = React.useState("");
     const [eye,setEye] = React.useState(<Ionicons name="eye-off" size={25} color="black" />)
-    const {signUp} = useContext(AuthenticationContext);
-    const handleSignUp = ()=>{
-      try{
-          signUp(email,password,name);
-          navigation.navigate("TABS");
-      }catch(error){
-          console.log(console.error);
-      }
-  }
+    const {signIn, isAuthed} = useContext(AuthenticationContext);
+
+    useEffect(()=>{
+      if (isAuthed)
+        navigation.navigate("TABS");
+    },[isAuthed,navigation])
+
+    const handleLogin = () =>{
+        try{
+            signIn(email,password);
+        }catch(error){
+            console.log(console.error);
+        }
+    }
+
     const changeEye = () => {
       if(hidePassword != true){
         setEye(<Ionicons name="eye-off" size={25} color="black" />)
@@ -41,12 +47,6 @@ export const SignupScreen = ({navigation}) =>{
         <SafeAreaView style = {styles.safearea}>
           <Image source={require('../../assets/logo.png')} style = {styles.imageStyle} />
           <View style = {styles.inputView}>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeName}
-            value={name}
-            placeholder="Name"
-          />
           <TextInput
             style={styles.input}
             onChangeText={onChangeEmail}
@@ -68,11 +68,8 @@ export const SignupScreen = ({navigation}) =>{
           </View>
 
           {/*sign up button*/}
-          <TouchableOpacity onPress={handleSignUp} style={styles.button}>
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
-            <Text style={styles.buttonText}>Have an account?</Text>
+          <TouchableOpacity onPress={handleLogin} style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
         </SafeAreaView>
         </KeyboardAwareScrollView>

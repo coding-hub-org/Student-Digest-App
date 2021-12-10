@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { Overlay } from "react-native-elements";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
+import { getAuth, updateProfile } from "firebase/auth";
 
 const storage = getStorage();
 
@@ -89,6 +90,19 @@ export const SeeMoreProfile = ({ navigation }) => {
     }).start();
   };
 
+  const updateUser = (url) => {
+    const auth = getAuth();
+    updateProfile(auth.currentUser, {
+      photoURL: url,
+    }).then(() => {
+      // Profile updated!
+      // ...
+    }).catch((error) => {
+      // An error occurred
+      // ...
+    });
+  }
+
   React.useEffect(() => {
     fecthProfilePhotos().then(() => {setLoading(false);});
     console.log(images);
@@ -103,7 +117,10 @@ export const SeeMoreProfile = ({ navigation }) => {
               <Text style={styles.overlayText}>Change profile picture to this photo?</Text>
               <Image source={{uri: imageUri}} style ={styles.overlayImage}/>
               <View style={styles.overlayViewStyle}>
-                <TouchableOpacity style={styles.overlayButton}><Text style={{fontWeight:"bold"}}>Yes</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.overlayButton} onPress={() => {
+                  updateUser(imageUri);
+                  toggleOverlay("");
+                }}><Text style={{fontWeight:"bold"}}>Yes</Text></TouchableOpacity>
                 <TouchableOpacity style={styles.overlayButton} onPress={() => toggleOverlay("")}><Text style={{fontWeight:"bold"}}>No</Text></TouchableOpacity>
               </View>
             </Animated.View>

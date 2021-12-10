@@ -13,22 +13,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 
 const firebaseConfig = {
-  apiKey: '${API_KEY}',
+  apiKey: `${API_KEY}`,
   authDomain: "student-digest-app.firebaseapp.com",
   databaseURL: "https://student-digest-app-default-rtdb.firebaseio.com",
   projectId: "student-digest-app",
   storageBucket: "student-digest-app.appspot.com",
-  messagingSenderId: '${MSI}',
-  appId: '${APP_ID}',
-  measurementId: "G-S76LZ12738"
+  messagingSenderId: `${MSI}`,
+  appId: `${APP_ID}`,
+  measurementId: "${config.measurementId}"
 };
 
 // Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}else {
-  firebase.app(); // if already initialized, use that one
-}
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }else {
+    firebase.app(); // if already initialized, use that one
+  }
 //firebase.initializeApp(firebaseConfig);
 
 const db = getFirestore();

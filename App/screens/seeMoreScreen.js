@@ -7,10 +7,10 @@ export const SeeMoreScreen = ({route, navigation}) => {
     const {t,d,pic} = route.params;
     return(
         <ScrollView>
-            <View>
+            <View style = {styles.viewStyle}>
                 <Image source={{uri: pic,}} style={styles.imageStyle}/>
                 <Text style = {styles.titleText}>{t}</Text>
-                <Text>{d}</Text>
+                <Text style = {styles.descriptionStyle}>{d}</Text>
             </View>
         </ScrollView>
     );
@@ -22,12 +22,20 @@ const styles = StyleSheet.create({
     },
     titleText: {
       fontSize: 20,
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
     imageStyle: {
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
         width: "100%",
         height : 200,
+    },
+    descriptionStyle: {
+        margin: 10
+    },
+    viewStyle: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
     }
   });
