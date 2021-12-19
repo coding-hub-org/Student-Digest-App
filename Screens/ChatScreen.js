@@ -7,11 +7,7 @@ const Chatscreen =({navigation}) => {
     return (
     <View style = {styles.container}> 
     
-        <Text> Chat Screen</Text>
-        <Button 
-          title = "Click This"
-          onPress ={() => alert('Button Clicked!')}
-          />
+        <Text>Coming Soon!</Text>
     </View>
     );
     };   
@@ -23,7 +19,7 @@ const styles = StyleSheet.create({
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#8fcbbc',
+          backgroundColor: '#FAF9F6',
 
       },
 

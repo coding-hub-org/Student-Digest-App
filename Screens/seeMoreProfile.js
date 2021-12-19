@@ -33,8 +33,6 @@ export const SeeMoreProfile = ({ navigation }) => {
   const fecthProfilePhotos = async () => {
     try{
       let itemRefList = await listAll(listRef);
-      console.log("itemRefList");
-      console.log(itemRefList);
       let temp = await Promise.all(itemRefList.items.map(async (itemRef)=>await getDownloadURL(itemRef)));
       setImages(temp);
     }catch(error){
@@ -105,7 +103,6 @@ export const SeeMoreProfile = ({ navigation }) => {
 
   React.useEffect(() => {
     fecthProfilePhotos().then(() => {setLoading(false);});
-    console.log(images);
   }, []);
 
   return (
