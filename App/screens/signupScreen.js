@@ -50,6 +50,9 @@ export const SignupScreen = ({navigation}) =>{
     }, [isAuthed,navigation])
 
     const handleSignUp = ()=>{
+      if(email == "" || password == "" || name == ""){
+        return;
+      }
       try{
           signUp(email,password,name);
           navigation.navigate("TABS");

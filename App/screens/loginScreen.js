@@ -47,11 +47,14 @@ export const LoginScreen = ({navigation}) =>{
     },[isAuthed,navigation])
 
     const handleLogin = () =>{
-        try{
-            signIn(email,password);
-        }catch(error){
-            console.log(console.error);
-        }
+      if(email == "" || password == ""){
+        return;
+      }
+      try{
+          signIn(email,password);
+      }catch(error){
+          console.log(console.error);
+      }
     }
 
     const changeEye = () => {
