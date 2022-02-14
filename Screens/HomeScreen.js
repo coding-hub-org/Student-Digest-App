@@ -54,15 +54,22 @@ const Homescreen = ({navigation}) => {
 
   const makeCards = () => {
     return itemsArray.map((digest, i) => {
-      return(
-        <Cards
-          navigation = {navigation}
-          name = {digest["title"]}
-          des = {digest["description"]}
-          img = {digest["imageOverlay"]}
-          key = {i}
-        />
-      );
+      if(digest["title"] == null || digest["description"] == null || digest["imageOverlay"] == null){
+        return (<Text key={i}></Text>)
+      }
+      try{
+        return(
+          <Cards
+            navigation = {navigation}
+            name = {digest["title"]}
+            des = {digest["description"]}
+            img = {digest["imageOverlay"]}
+            key = {i}
+          />
+        );
+      }catch(err){
+        console.log("Card could not be filled")
+      }
     });
   }
 
