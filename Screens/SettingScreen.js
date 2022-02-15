@@ -84,6 +84,9 @@ const Settingscreen = ({ navigation }) => {
     }
     return localStorage.map((digest, i) => {
       const parsed = JSON.parse(digest[1]);
+      if(parsed["t"] == null || parsed["d"] == null || parsed["pic"] == null){
+        return(<Text key={i}></Text>)
+      }
       return(
         <Card style = {styles.cardStyle} elevation = {2} onPress = {() => {
           navigation.navigate("SeeMore", {t: parsed["t"], d: parsed["d"], pic: parsed["pic"]});
