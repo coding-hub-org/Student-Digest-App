@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "student_digest_app",
-    "slug": "student_digest_app",
+    "slug": "student-digest-app",
+    "owner": "njt2000",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
