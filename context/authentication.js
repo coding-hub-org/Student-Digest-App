@@ -37,6 +37,7 @@ const doSignIn = (onSucess, onFail) =>{
               });
             console.log(error);
             if (onFail) onFail();
+            return "bad-email";
         }  
     }
 }

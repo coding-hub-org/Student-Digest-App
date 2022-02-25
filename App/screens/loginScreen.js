@@ -63,7 +63,11 @@ export const LoginScreen = ({navigation}) =>{
         return;
       }
       try{
-          signIn(email,password);
+          signIn(email,password).then((v) => {
+            if(v == null){
+              navigation.navigate("TABS");
+            }
+          } );
       }catch(error){
         Toast.show({
           type: 'error',

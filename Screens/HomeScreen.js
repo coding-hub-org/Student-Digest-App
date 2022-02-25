@@ -72,7 +72,7 @@ const Homescreen = ({navigation}) => {
       temp.push({
         title: "No digest to pull",
         imageOverlay: "https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        description: "We are having trouble getting the digest. Enjoy this photo of a dog.",
+        description: "We are having trouble getting the digest. Enjoy this photo of a dog. Try refreshing the Home screen by swiping/pulling down.",
       });
       setItemsArray(temp);
       setLoading(false);
