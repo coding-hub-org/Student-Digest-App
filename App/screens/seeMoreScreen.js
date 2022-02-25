@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Text,View,Button,Alert, Image, StyleSheet,ScrollView} from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Card, Paragraph, Title } from "react-native-paper";
@@ -6,6 +6,9 @@ import { Card, Paragraph, Title } from "react-native-paper";
 
 export const SeeMoreScreen = ({route, navigation}) => {
     const {t,d,pic} = route.params;
+    React.useEffect(() => {
+        navigation.setOptions({ title: t });
+      }, []);
     return(
         <ScrollView>
             <View style = {styles.viewStyle}>

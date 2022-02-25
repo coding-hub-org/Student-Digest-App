@@ -60,12 +60,33 @@ const Homescreen = ({navigation}) => {
   const [isLoading, setLoading] = React.useState(true);
   const fecthData = async () => {
     let temp = [];
-    const querySnapshot = await getDocs(collection(db, "digest"));
-    querySnapshot.forEach((doc) => {
-      temp.push(doc.data());
-    });
-    setItemsArray(temp);
-    setLoading(false);
+    try{
+      const querySnapshot = await getDocs(collection(db, "digest"));
+      querySnapshot.forEach((doc) => {
+        temp.push(doc.data());
+      });
+      setItemsArray(temp);
+      setLoading(false);
+    }catch(e){
+      temp.push({
+        title: "No digest to pull",
+        imageOverlay: "https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        description: "We are having trouble getting the digest. Enjoy this photo of a dog.",
+      });
+      setItemsArray(temp);
+      setLoading(false);
+    }
+  }
+
+  const CheckScheduledPush = async () =>{
+    try {
+      const value = await AsyncStorage.getItem('PUSHED_NOTIFICATION');
+      if(value !== null) {
+        return true;
+      }
+    } catch(e) {
+      return false;
+    }
   }
   React.useEffect(() => {
     navigation.addListener("beforeRemove", (e) => {
@@ -83,7 +104,11 @@ const Homescreen = ({navigation}) => {
       console.log(response);
     });
 
-    schedulePushNotification();
+    CheckScheduledPush().then((val) =>{
+      if(!val){
+        schedulePushNotification();
+      }
+    });
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
@@ -136,6 +161,11 @@ async function schedulePushNotification() {
       repeats: true
      },
   });
+  try {
+    await AsyncStorage.setItem('PUSHED_NOTIFICATION', "true")
+  } catch (e) {
+    // saving error
+  }
 }
 
 async function registerForPushNotificationsAsync() {
