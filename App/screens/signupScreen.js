@@ -4,11 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import AuthenticationContext from '../../context/authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 let hidePassword = true;// true hides the password, false shows it
+const emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
 export const SignupScreen = ({navigation}) =>{
     const [email, onChangeEmail] = React.useState("");
@@ -49,15 +51,44 @@ export const SignupScreen = ({navigation}) =>{
       }
     }, [isAuthed,navigation])
 
-    const handleSignUp = ()=>{
+    const handleSignUp = () => {
       if(email == "" || password == "" || name == ""){
+        Toast.show({
+          type: 'error',
+          text1: 'Email, password, and/or name values are empty! ❌',
+        });
         return;
       }
+      if(password.length < 6){
+        Toast.show({
+          type: 'error',
+          text1: 'Password must be greater than 6 characters! ❌',
+        });
+        return;
+      }
+      // if(emailReg.test(email) == false){
+      //   Toast.show({
+      //     type: 'error',
+      //     text1: 'Must be a valid email ❌',
+      //   });
+      //   return;
+      // }
       try{
-          signUp(email,password,name);
-          navigation.navigate("TABS");
+          console.log(email);
+          signUp(email,password,name).then((v) => {
+            console.log(v);
+            if(v == null){
+              navigation.navigate("TABS");
+            }
+            return;
+          });
+          //navigation.navigate("TABS");
       }catch(error){
-          console.log(console.error);
+        Toast.show({
+          type: 'error',
+          text1: 'Bad Email/Password! ❌',
+        });
+        return;
       }
   }
     const changeEye = () => {

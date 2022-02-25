@@ -4,6 +4,7 @@ import 'firebase/compat/auth';
 import {API_KEY,MSI,APP_ID} from "@env";
 import 'firebase/compat/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const firebaseConfig = {
     apiKey: `${API_KEY}`,
@@ -25,6 +26,15 @@ const doSignIn = (onSucess, onFail) =>{
             let credential = await firebase.auth().signInWithEmailAndPassword(email,password);
             if (onSucess) onSucess(credential);
         }catch(error){
+            try {
+                await AsyncStorage.removeItem('credentails');
+              } catch(e) {
+                console.log("could not remove bad cred");
+              }
+            Toast.show({
+                type: 'error',
+                text1: 'Bad Email/Password!',
+              });
             console.log(error);
             if (onFail) onFail();
         }  
@@ -40,8 +50,18 @@ const doSignUp = (onSucess, onFail) =>{
                 onSucess(email,name);
             }
         }catch(error){
+            try {
+                await AsyncStorage.removeItem('credentails');
+              } catch(e) {
+                console.log("could not remove bad cred");
+              }
+              Toast.show({
+                type: 'error',
+                text1: 'Bad Email/Password!',
+              });
             console.log(error);
             if (onFail) onFail();
+            return "bad-email";
         }  
     }
 }

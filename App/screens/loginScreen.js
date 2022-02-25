@@ -49,12 +49,27 @@ export const LoginScreen = ({navigation}) =>{
 
     const handleLogin = () =>{
       if(email == "" || password == ""){
+        Toast.show({
+          type: 'error',
+          text1: 'Email or password values are empty! ❌',
+        });
+        return;
+      }
+      if(password.length < 6){
+        Toast.show({
+          type: 'error',
+          text1: 'Password must be greater than 6 characters! ❌',
+        });
         return;
       }
       try{
           signIn(email,password);
       }catch(error){
-          console.log(console.error);
+        Toast.show({
+          type: 'error',
+          text1: 'Bad Email/Password! ❌',
+        });
+        return;
       }
     }
 
