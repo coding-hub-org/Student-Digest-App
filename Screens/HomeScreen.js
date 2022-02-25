@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useRef } from 'react';
-import { View, Text, Button, StyleSheet,ScrollView, ActivityIndicator, TouchableOpacity} from 'react-native';
+import { View, Text, Button, StyleSheet,ScrollView, ActivityIndicator, TouchableOpacity,RefreshControl} from 'react-native';
 import {MyButton} from '../App/components/dummyButton';
 import { Cards } from '../App/components/card.component';
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore"
@@ -78,6 +78,13 @@ const Homescreen = ({navigation}) => {
     }
   }
 
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setItemsArray([]);
+    setRefreshing(true);
+    fecthData().then(() => setRefreshing(false));
+  }, []);
+
   const CheckScheduledPush = async () =>{
     try {
       const value = await AsyncStorage.getItem('PUSHED_NOTIFICATION');
@@ -139,7 +146,7 @@ const Homescreen = ({navigation}) => {
 
 
   return(
-    <ScrollView>
+    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
       <View style = {styles.container}>
         {isLoading ? <ActivityIndicator size="large" color="#de706f" /> : makeCards()}
       </View>
