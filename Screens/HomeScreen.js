@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useRef } from 'react';
-import { View, Text, Button, StyleSheet,ScrollView, ActivityIndicator, TouchableOpacity,RefreshControl} from 'react-native';
+import { View, Text, Button, StyleSheet,ScrollView, ActivityIndicator, TouchableOpacity,RefreshControl,Dimensions} from 'react-native';
 import {MyButton} from '../App/components/dummyButton';
 import { Cards } from '../App/components/card.component';
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore"
@@ -45,7 +45,8 @@ Notifications.setNotificationHandler({
 });
 
 
-
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 
 const Homescreen = ({navigation}) => {
@@ -148,7 +149,7 @@ const Homescreen = ({navigation}) => {
   return(
     <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
       <View style = {styles.container}>
-        {isLoading ? <ActivityIndicator size="large" color="#de706f" /> : makeCards()}
+        {isLoading ? <ActivityIndicator size="large" color="#de706f" /> : itemsArray.length < 1 ? <Text style={styles.emptyDigest}>It's lonely in here...Pull down to refresh</Text> : makeCards()}
       </View>
     </ScrollView>
   );
@@ -215,6 +216,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
       },
+
+      emptyDigest: {
+        textAlign: "center",
+        textAlignVertical: "center",
+        height: windowHeight - 125
+      }
 
     });
       
