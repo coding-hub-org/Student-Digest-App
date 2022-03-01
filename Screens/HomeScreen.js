@@ -136,6 +136,7 @@ const Homescreen = ({navigation}) => {
             name = {digest["title"]}
             des = {digest["description"]}
             img = {digest["imageOverlay"]}
+            time = {digest["timeStamp"]}
             key = {i}
           />
         );
