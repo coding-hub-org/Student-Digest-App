@@ -106,6 +106,7 @@ const Settingscreen = ({ navigation }) => {
           <Card.Cover source={{ uri: parsed["pic"] }} style={styles.test}/>
           <Card.Content>
               <Title>{parsed["t"].slice(0,50)}...</Title>
+              <Paragraph>{Date(parsed["timeStamp"]).toString().slice(0,15)}</Paragraph>
           </Card.Content>
       </Card>
       );
