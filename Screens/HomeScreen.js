@@ -69,6 +69,7 @@ const Homescreen = ({navigation}) => {
       setItemsArray(temp);
       setLoading(false);
     }catch(e){
+      console.log(e);
       temp.push({
         title: "No digest to pull",
         imageOverlay: "https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

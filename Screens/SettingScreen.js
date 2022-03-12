@@ -45,8 +45,6 @@ const Settingscreen = ({ navigation }) => {
     } catch(e) {
       // remove error
     }
-  
-    console.log(digest, "has been removed");
   }
 
   const getAllKeys = async () => {
@@ -121,8 +119,6 @@ const Settingscreen = ({ navigation }) => {
       const photoURL = user.photoURL;
       setUsername(displayName);
       setIcon(photoURL);
-      console.log(user.uid, "<------");
-      console.log(user.displayName, "<------");
     }
   }
 
@@ -132,8 +128,6 @@ const Settingscreen = ({ navigation }) => {
       SetLocalStorage(val);
     });
     setUserCred();
-    console.log(username, "<------");
-    console.log(icon, "<------");
     return () => {};
   }, [isFocused]);
 

@@ -24,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/ic_launcher-web.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.codinghub.studentdigest"
     },
     "web": {
       "favicon": "./assets/STUDENT-DIGEST-LOGO.png"
