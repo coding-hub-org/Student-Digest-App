@@ -40,10 +40,10 @@ const Settingscreen = ({ navigation }) => {
   const removeSavedDigest = async (digest) => {
     try {
       await AsyncStorage.removeItem(digest)
-    } catch(e) {
+    } catch (e) {
       // remove error
     }
-  
+
     console.log(digest, "has been removed");
   }
 
@@ -51,7 +51,7 @@ const Settingscreen = ({ navigation }) => {
     let keys = []
     try {
       keys = await AsyncStorage.getAllKeys()
-    } catch(e) {
+    } catch (e) {
       // read key error
     }
     return keys;
@@ -61,7 +61,7 @@ const Settingscreen = ({ navigation }) => {
     let values
     try {
       values = await AsyncStorage.multiGet(keys)
-    } catch(e) {
+    } catch (e) {
       // read error
     }
     return values;
@@ -74,7 +74,7 @@ const Settingscreen = ({ navigation }) => {
   }
 
   const makeCards = () => {
-    if(localStorage.length < 1){
+    if (localStorage.length < 1) {
       return (
         <View style={styles.emptyDigestView}>
           <Text style={styles.emptyDigest}>Looks like you haven't saved anything.</Text>
@@ -84,14 +84,14 @@ const Settingscreen = ({ navigation }) => {
     }
     return localStorage.map((digest, i) => {
       const parsed = JSON.parse(digest[1]);
-      if(parsed["t"] == null || parsed["d"] == null || parsed["pic"] == null){
-        return(<Text key={i}></Text>)
+      if (parsed["t"] == null || parsed["d"] == null || parsed["pic"] == null) {
+        return (<Text key={i}></Text>)
       }
-      return(
-        <Card style = {styles.cardStyle} elevation = {2} onPress = {() => {
-          navigation.navigate("SeeMore", {t: parsed["t"], d: parsed["d"], pic: parsed["pic"]});
-          }} key = {i} 
-          onLongPress = {() => {
+      return (
+        <Card style={styles.cardStyle} elevation={2} onPress={() => {
+          navigation.navigate("SeeMore", { t: parsed["t"], d: parsed["d"], pic: parsed["pic"] });
+        }} key={i}
+          onLongPress={() => {
             removeSavedDigest(parsed["t"]);
             refresh();
             Toast.show({
@@ -101,11 +101,11 @@ const Settingscreen = ({ navigation }) => {
             });
           }}
         >
-          <Card.Cover source={{ uri: parsed["pic"] }} style={styles.test}/>
+          <Card.Cover source={{ uri: parsed["pic"] }} style={styles.test} />
           <Card.Content>
-              <Title>{parsed["t"].slice(0,50)}...</Title>
+            <Title>{parsed["t"].slice(0, 50)}...</Title>
           </Card.Content>
-      </Card>
+        </Card>
       );
     });
   }
@@ -113,7 +113,7 @@ const Settingscreen = ({ navigation }) => {
   const setUserCred = () => {
     const auth = getAuth();
     const user = auth.currentUser;
-    if(user !== null){
+    if (user !== null) {
       const displayName = user.displayName;
       const photoURL = user.photoURL;
       setUsername(displayName);
@@ -131,7 +131,7 @@ const Settingscreen = ({ navigation }) => {
     setUserCred();
     console.log(username, "<------");
     console.log(icon, "<------");
-    return () => {};
+    return () => { };
   }, [isFocused]);
 
 
@@ -176,7 +176,7 @@ const Settingscreen = ({ navigation }) => {
       <View style={styles.userInfoSection}>
       </View>
       <Title>Saved Digest</Title>
-      <ScrollView horizontal = {true} style = {styles.scrollViewStyle} contentContainerStyle={styles.ctcs}>
+      <ScrollView horizontal={true} style={styles.scrollViewStyle} contentContainerStyle={styles.ctcs}>
         {/* <Text></Text> */}
         {makeCards()}
       </ScrollView>
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: - (windowHeight/30),
+    paddingTop: - (windowHeight / 30),
     //paddingBottom: - (windowHeight/30),
     backgroundColor: "#FAF9F6",
   },
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     width: 300,
     margin: 10,
     height: windowHeight / 3.8,
-},
+  },
   test: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
-  emptyDigest:{
+  emptyDigest: {
     color: "grey",
   },
   emptyDigestView: {

@@ -9,6 +9,7 @@ import { SettingsScreen } from './App/screens/settingScreen';
 import { SeeMoreScreen } from './App/screens/seeMoreScreen';
 import { SeeMoreProfile } from './Screens/seeMoreProfile';
 import { LoginScreen } from './App/screens/loginScreen';
+import { aboutScreen } from './App/screens/aboutScreen';
 import AuthenticationContext, { doSignIn, doSignOut, doSignUp } from './context/authentication';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
@@ -49,6 +50,7 @@ function App() {
         <Stack.Screen name="Profiles" component={SeeMoreProfile} />
         <Stack.Screen name="SignUp" component={SignupScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: true }} />
+        <Stack.Screen name="About" component={aboutScreen} />
       </Stack.Navigator>
       <Toast />
     </NavigationContainer>
@@ -80,7 +82,7 @@ export default function AuthenticatingApp() {
     <AuthenticationContext.Provider value={{
       isAuthed: isAuthed,
       signIn: doSignIn(() => { setAuthed(true); }),
-      signUp: doSignUp(updateUser),
+      signUp: doSignUp(updateUser()),
       signOut: doSignOut(() => { setAuthed(false) })
     }}
     >
