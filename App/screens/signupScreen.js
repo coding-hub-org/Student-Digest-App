@@ -4,11 +4,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import AuthenticationContext from '../../context/authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+import axios from 'axios';
+
+import Filter from 'bad-words';
+import LeoProfanity from "leo-profanity";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 let hidePassword = true;// true hides the password, false shows it
+
+const profanityUrl = "https://www.purgomalum.com/service/containsprofanity?text=";
 
 export const SignupScreen = ({navigation}) =>{
     const [email, onChangeEmail] = React.useState("");
@@ -49,16 +56,54 @@ export const SignupScreen = ({navigation}) =>{
       }
     }, [isAuthed,navigation])
 
-    const handleSignUp = ()=>{
+    const handleSignUp = () => {
       if(email == "" || password == "" || name == ""){
+        Toast.show({
+          type: 'error',
+          text1: 'Email, password, and/or name values are empty! ❌',
+        });
         return;
       }
-      try{
-          signUp(email,password,name);
-          navigation.navigate("TABS");
-      }catch(error){
-          console.log(console.error);
-      }
+      //profanity Checker
+      axios({
+        method: 'get',
+        url: `${profanityUrl}${name}`,
+      }).then((response) => {
+        if(response.data == true){
+          Toast.show({
+            type: 'error',
+            text1: 'Name has Profanity ❌',
+          });
+          return;
+        }
+        if(password.length < 6){
+          Toast.show({
+            type: 'error',
+            text1: 'Password must be greater than 6 characters! ❌',
+          });
+          return;
+        }
+  
+        
+        try{
+            console.log(email);
+            signUp(email,password,name).then((v) => {
+              console.log(v);
+              if(v == null){
+                navigation.navigate("TABS");
+              }
+              return;
+            });
+            //navigation.navigate("TABS");
+        }catch(error){
+          Toast.show({
+            type: 'error',
+            text1: 'Bad Email/Password! ❌',
+          });
+          return;
+        }
+      });
+
   }
     const changeEye = () => {
       if(hidePassword != true){

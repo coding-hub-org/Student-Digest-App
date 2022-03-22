@@ -94,6 +94,7 @@ export const SeeMoreProfile = ({ navigation }) => {
       photoURL: url,
     }).then(() => {
       // Profile updated!
+      navigation.goBack();
       // ...
     }).catch((error) => {
       // An error occurred
@@ -118,7 +119,7 @@ export const SeeMoreProfile = ({ navigation }) => {
                   updateUser(imageUri);
                   toggleOverlay("");
                 }}><Text style={{fontWeight:"bold"}}>Yes</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.overlayButton} onPress={() => toggleOverlay("")}><Text style={{fontWeight:"bold"}}>No</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.overlayButton} onPress={() => {toggleOverlay("");}}><Text style={{fontWeight:"bold"}}>No</Text></TouchableOpacity>
               </View>
             </Animated.View>
           </Overlay>
