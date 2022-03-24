@@ -45,11 +45,6 @@ const Settingscreen = ({ navigation }) => {
     } catch (e) {
       // remove error
     }
-<<<<<<< HEAD
-
-    console.log(digest, "has been removed");
-=======
->>>>>>> upstream/master
   }
 
   const getAllKeys = async () => {
@@ -79,11 +74,7 @@ const Settingscreen = ({ navigation }) => {
   }
 
   const makeCards = () => {
-<<<<<<< HEAD
-    if (localStorage.length < 1) {
-=======
-    if(localStorage.length - 2 < 1){
->>>>>>> upstream/master
+    if (localStorage.length - 2 < 1) {
       return (
         <View style={styles.emptyDigestView}>
           <Text style={styles.emptyDigest}>Looks like you haven't saved anything.</Text>
@@ -112,12 +103,8 @@ const Settingscreen = ({ navigation }) => {
         >
           <Card.Cover source={{ uri: parsed["pic"] }} style={styles.test} />
           <Card.Content>
-<<<<<<< HEAD
             <Title>{parsed["t"].slice(0, 50)}...</Title>
-=======
-              <Title>{parsed["t"].slice(0,50)}...</Title>
-              <Paragraph>{Date(parsed["timeStamp"]).toString().slice(0,15)}</Paragraph>
->>>>>>> upstream/master
+            <Paragraph>{Date(parsed["timeStamp"]).toString().slice(0, 15)}</Paragraph>
           </Card.Content>
         </Card>
       );
@@ -141,63 +128,57 @@ const Settingscreen = ({ navigation }) => {
       SetLocalStorage(val);
     });
     setUserCred();
-<<<<<<< HEAD
-    console.log(username, "<------");
-    console.log(icon, "<------");
     return () => { };
-=======
-    return () => {};
->>>>>>> upstream/master
   }, [isFocused]);
 
 
   let imageUrl = "";
   return (
     <ScrollView>
-    <SafeAreaView style={styles.container}>
-      <View style={styles.Settingview}>
-        <SettingsIcon style={styles.button} navigation={navigation} size={10} />
-      </View>
-      <View style={styles.userInfoSection}>
-        <View style={{ flexDirection: "column" }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Profiles")}
-            navigation={navigation}
-          >
-            <View style={styles.profileCircle}>
-              <Avatar.Image
-                navigation={navigation}
-                source={{ uri: icon }}
-                size={145}
-                marginLeft={0}
-              />
-            </View>
-          </TouchableOpacity>
-          <View style={{ marginLeft: 0, justifyContent: 'center', alignItems: 'center', }}>
-            <Title
-              style={[
-                styles.title,
-                {
-                  marginTop: 30,
-                },
-              ]}
+      <SafeAreaView style={styles.container}>
+        <View style={styles.Settingview}>
+          <SettingsIcon style={styles.button} navigation={navigation} size={10} />
+        </View>
+        <View style={styles.userInfoSection}>
+          <View style={{ flexDirection: "column" }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Profiles")}
+              navigation={navigation}
             >
-              {username}
-            </Title>
-            <View>
-              <Caption> @ Plattsburgh </Caption>
+              <View style={styles.profileCircle}>
+                <Avatar.Image
+                  navigation={navigation}
+                  source={{ uri: icon }}
+                  size={145}
+                  marginLeft={0}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={{ marginLeft: 0, justifyContent: 'center', alignItems: 'center', }}>
+              <Title
+                style={[
+                  styles.title,
+                  {
+                    marginTop: 30,
+                  },
+                ]}
+              >
+                {username}
+              </Title>
+              <View>
+                <Caption> @ Plattsburgh </Caption>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View style={styles.userInfoSection}>
-      </View>
-      <Title>Saved Digest</Title>
-      <ScrollView horizontal={true} style={styles.scrollViewStyle} contentContainerStyle={styles.ctcs}>
-        {/* <Text></Text> */}
-        {makeCards()}
-      </ScrollView>
-    </SafeAreaView>
+        <View style={styles.userInfoSection}>
+        </View>
+        <Title>Saved Digest</Title>
+        <ScrollView horizontal={true} style={styles.scrollViewStyle} contentContainerStyle={styles.ctcs}>
+          {/* <Text></Text> */}
+          {makeCards()}
+        </ScrollView>
+      </SafeAreaView>
     </ScrollView>
   );
 };
