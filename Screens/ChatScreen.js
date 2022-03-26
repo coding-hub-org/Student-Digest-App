@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
 import { View, Text, Button, StyleSheet } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeApp } from "firebase/app";
 import {
   getDatabase,
@@ -13,7 +13,11 @@ import {
   orderByValue,
   orderByChild,
 } from "firebase/database";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { API_KEY, MSI, APP_ID } from "@env";
 import firebase from "firebase/compat/app";
 import { async } from "@firebase/util";
@@ -40,9 +44,9 @@ if (!firebase.apps.length) {
 // Get a reference to the database service
 const db = getDatabase(app);
 //Auth
-const auth = getAuth();
+const auth = getAuth(app);
 const user = auth.currentUser;
-var localId = "1";
+var localId = "9999";
 if (user !== null) {
   localId = user.uid;
 }
@@ -94,22 +98,49 @@ const Chatscreen = ({ navigation }) => {
     return update(ref(db), postObject);
   };
 
+  const fetchCred = async () => {
+    try {
+      const cred = await AsyncStorage.getItem("credentails");
+      if (cred != null) {
+        return JSON.parse(cred);
+      }
+    } catch (err) {
+      console.log("no credentails saved");
+      return null;
+    }
+  };
+
   useEffect(() => {
-    fecthMessages();
+    fetchCred().then((val) => {
+      if (val !== null) {
+        signInWithEmailAndPassword(auth, val["email"], val["password"])
+          .then((userCredential) => {
+            // Signed in
+            localId = userCredential.user.uid;
+            fecthMessages();
+            // ...
+          })
+          .catch((error) => {
+            console.log("User does not exist");
+          });
+      } else {
+        console.log("User does not exist");
+      }
+    });
   }, []);
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
     const text = messages[0]["text"];
-    if (user !== null) {
+    if (auth.currentUser !== null) {
       pushMessage(
         text,
         new Date(),
-        user.uid,
-        user.photoURL,
-        user.displayName
-      ).then((val) => console.log("text was made"));
+        auth.currentUser.uid,
+        auth.currentUser.photoURL,
+        auth.currentUser.displayName
+      ).then((val) => console.log(String(val)));
     }
   }, []);
 
