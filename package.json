@@ -34,6 +34,7 @@
     "react-native-image-viewing": "^0.2.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-paper": "^4.10.0",
+    "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-size-matters": "^0.4.0",
