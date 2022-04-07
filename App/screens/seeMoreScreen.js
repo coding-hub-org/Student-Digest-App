@@ -56,9 +56,21 @@ export const SeeMoreScreen = ({route, navigation}) => {
         }
         return ans;
     }
+    const replaceURLs = (message) => {
+      if(!message) return;
+     
+      var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+      return message.replace(urlRegex, function (url) {
+        var hyperlink = url;
+        if (!hyperlink.match('^https?:\/\/')) {
+          hyperlink = 'http://' + hyperlink;
+        }
+        return '<a href="' + hyperlink + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'
+      });
+    }
 
     const source = {
-        html: "<div style='font-Size:20px'>" + makeBold(d) + "</div>"
+        html: "<div style='font-Size:20px'>" + replaceURLs(makeBold(d)) + "</div>"
     }
     React.useEffect(() => {
         navigation.setOptions({ title: t });
