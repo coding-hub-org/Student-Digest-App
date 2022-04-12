@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: 300,
     margin: 10,
-    height: windowHeight / 3.8,
+    height: 'auto',
 },
   test: {
     borderTopLeftRadius: 20,
@@ -229,14 +229,15 @@ const styles = StyleSheet.create({
     //marginTop: 10,
     backgroundColor: "white",
     width: "100%",
-    height: windowHeight / 2,
+    height: 'auto',
     elevation: 5,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   ctcs: {
     justifyContent: "center",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+
   },
   viewtester: {
     marginTop: 10,
