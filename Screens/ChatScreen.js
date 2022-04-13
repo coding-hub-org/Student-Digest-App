@@ -151,6 +151,7 @@ const Chatscreen = ({ navigation }) => {
       user={{
         _id: localId,
       }}
+      renderUsernameOnMessage={true}
     />
   );
 };
