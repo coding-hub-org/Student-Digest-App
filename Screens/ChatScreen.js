@@ -21,8 +21,12 @@ import {
 import { API_KEY, MSI, APP_ID } from "@env";
 import firebase from "firebase/compat/app";
 import { async } from "@firebase/util";
+import Toast from 'react-native-toast-message';
 
 // TODO: Replace with your app's Firebase project configuration
+
+const axios = require('axios');
+
 const firebaseConfig = {
   apiKey: `${API_KEY}`,
   authDomain: "student-digest-app.firebaseapp.com",
@@ -109,6 +113,21 @@ const Chatscreen = ({ navigation }) => {
       return null;
     }
   };
+  //"https://www.purgomalum.com/service/containsprofanity?text= some value"
+  const hasProfanity = async (message) => {
+    try {
+  //add: ["bada", "profanityword"]
+     const response = await axios.get("https://www.purgomalum.com/service/containsprofanity?text=" + message);
+      console.log(response.data);
+  } 
+    catch (err) {
+    // Handle Error Here.
+      console.error(err);
+  }
+
+//If all else fails return something. HINT: return null
+  return true;
+}
 
   useEffect(() => {
     fetchCred().then((val) => {
@@ -133,15 +152,34 @@ const Chatscreen = ({ navigation }) => {
       GiftedChat.append(previousMessages, messages)
     );
     const text = messages[0]["text"];
-    if (auth.currentUser !== null) {
-      pushMessage(
-        text,
-        new Date(),
-        auth.currentUser.uid,
-        auth.currentUser.photoURL,
-        auth.currentUser.displayName
-      ).then((val) => console.log(String(val)));
-    }
+
+    hasProfanity(text).then((val) => {
+      // text = "";
+      console.log(val);
+       if (val) {
+         console.log("eh");
+         /*Toast.show({
+           type: 'error',
+           text1: 'Message contains profanity, cannot send this message!',
+         });*/
+         return;
+       }else{
+        if (auth.currentUser !== null) {
+          pushMessage(
+            text,
+            new Date(),
+            auth.currentUser.uid,
+            auth.currentUser.photoURL,
+            auth.currentUser.displayName
+          ).then((val) => console.log(String(val)));
+        }
+       }
+      }
+    );
+
+    
+
+    
   }, []);
 
   return (
