@@ -10,6 +10,7 @@ import { SeeMoreScreen } from "./App/screens/seeMoreScreen";
 import { SeeMoreProfile } from "./Screens/seeMoreProfile";
 import { LoginScreen } from "./App/screens/loginScreen";
 import { AboutScreen } from "./App/screens/aboutScreen";
+import { FrequentlyAskedQuestions } from "./App/screens/askedQuestion";
 import AuthenticationContext, {
   doSignIn,
   doSignOut,
@@ -63,6 +64,7 @@ function App() {
           options={{ headerShown: true }}
         />
         <Stack.Screen name="About" component={AboutScreen} />
+        <Stack.Screen name="Frequently Asked Questions" component={FrequentlyAskedQuestions} />
       </Stack.Navigator>
       <Toast />
     </NavigationContainer>
