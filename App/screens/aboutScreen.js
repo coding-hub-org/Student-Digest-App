@@ -1,10 +1,14 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, Image, StyleSheet } from "react-native";
 
 export const AboutScreen = () => {
   //add your buttons in the view
   return (
     <View>
+      <Image
+        style={styles.tinyLogo}
+        source={require("../../assets/SDACOVER.png")}
+      />
       <Text>
         The Student Digest App is Plattsburgh's most-read news app on SUNY
         Plattsburgh Campus. More than 500 on campus students wake up new digest
@@ -24,3 +28,10 @@ export const AboutScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  tinyLogo: {
+    width: "100%",
+    height: "40%",
+  },
+});
