@@ -1,11 +1,5 @@
 import React from "react";
 import { Text, View } from "react-native";
-import {
-  MyButton,
-  MyButton1,
-  MyButton2,
-  MyButton3,
-} from "../components/dummyButton";
 
 export const AboutScreen = () => {
   //add your buttons in the view

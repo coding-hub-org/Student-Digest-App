@@ -21,11 +21,11 @@ import {
 import { API_KEY, MSI, APP_ID } from "@env";
 import firebase from "firebase/compat/app";
 import { async } from "@firebase/util";
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
 
 // TODO: Replace with your app's Firebase project configuration
 
-const axios = require('axios');
+const axios = require("axios");
 
 const firebaseConfig = {
   apiKey: `${API_KEY}`,
@@ -113,21 +113,26 @@ const Chatscreen = ({ navigation }) => {
       return null;
     }
   };
+
   //"https://www.purgomalum.com/service/containsprofanity?text= some value"
   const hasProfanity = async (message) => {
     try {
-  //add: ["bada", "profanityword"]
-     const response = await axios.get("https://www.purgomalum.com/service/containsprofanity?text=" + message);
-      console.log(response.data);
-  } 
-    catch (err) {
-    // Handle Error Here.
+      //add: ["bada", "profanityword"]
+      const response = await axios.get(
+        "https://www.purgomalum.com/service/containsprofanity?text=" +
+          message +
+          "&add=bad word,poop"
+      );
+      console.log("purgomalum.com says: ", response.data);
+      return response.data;
+    } catch (err) {
+      // Handle Error Here.
       console.error(err);
-  }
+    }
 
-//If all else fails return something. HINT: return null
-  return true;
-}
+    //If all else fails return something. HINT: return null
+    return false;
+  };
 
   useEffect(() => {
     fetchCred().then((val) => {
@@ -148,22 +153,22 @@ const Chatscreen = ({ navigation }) => {
     });
   }, []);
   const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages)
-    );
     const text = messages[0]["text"];
 
-    hasProfanity(text).then((val) => {
+    hasProfanity(text).then((hp) => {
       // text = "";
-      console.log(val);
-       if (val) {
-         console.log("eh");
-         /*Toast.show({
-           type: 'error',
-           text1: 'Message contains profanity, cannot send this message!',
-         });*/
-         return;
-       }else{
+      console.log("has profanity:", hp);
+      if (hp) {
+        Toast.show({
+          type: "error",
+          text1: "Message Contains Profanity!",
+          text2: "cannot send this message!",
+        });
+        return;
+      } else {
+        setMessages((previousMessages) =>
+          GiftedChat.append(previousMessages, messages)
+        );
         if (auth.currentUser !== null) {
           pushMessage(
             text,
@@ -173,13 +178,8 @@ const Chatscreen = ({ navigation }) => {
             auth.currentUser.displayName
           ).then((val) => console.log(String(val)));
         }
-       }
       }
-    );
-
-    
-
-    
+    });
   }, []);
 
   return (

@@ -24,6 +24,8 @@ import avatarPicture from "../assets/avatar.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { AuthErrorCodes, getAuth } from "firebase/auth";
+import { UsernameField } from "../App/components/UsernameField_2";
+import { Ionicons } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -150,6 +152,22 @@ const Settingscreen = ({ navigation }) => {
     return () => {};
   }, [isFocused]);
 
+  const [nameEditing, setNameEditing] = React.useState("Display");
+  const [nameIcon, setNameIcon] = React.useState("pencil-sharp");
+  const [iconSize, setIconSize] = React.useState(20);
+
+  const onClickEdit = () => {
+    if (nameEditing === "Editing") {
+      setNameEditing("Display");
+      setNameIcon("pencil-sharp");
+      setIconSize(20);
+      return;
+    }
+    setNameEditing("Editing");
+    setIconSize(30);
+    setNameIcon("checkmark");
+  };
+
   let imageUrl = "";
   return (
     <ScrollView>
@@ -183,16 +201,24 @@ const Settingscreen = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Title
-                style={[
-                  styles.title,
-                  {
-                    marginTop: 30,
-                  },
-                ]}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: "20%",
+                }}
               >
-                {username}
-              </Title>
+                <UsernameField
+                  viewStatus={nameEditing}
+                  user={username}
+                  setUsername={setUsername}
+                />
+                <Ionicons
+                  size={iconSize}
+                  onPress={() => onClickEdit()}
+                  name={nameIcon}
+                />
+              </View>
               <View>
                 <Caption> @ Plattsburgh </Caption>
               </View>

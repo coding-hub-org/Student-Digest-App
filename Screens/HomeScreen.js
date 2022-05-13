@@ -10,7 +10,6 @@ import {
   RefreshControl,
   Dimensions,
 } from "react-native";
-import { MyButton } from "../App/components/dummyButton";
 import { Cards } from "../App/components/card.component";
 import {
   getFirestore,

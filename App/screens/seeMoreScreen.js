@@ -96,7 +96,7 @@ export const SeeMoreScreen = ({ route, navigation }) => {
 
   const source = {
     html:
-      "<div style='font-Size:9px'>" +
+      "<div style='font-Size:9.5px'>" +
       addNewLines(replaceURLs(makeBold(d))) +
       "</div>",
   };
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     fontFamily: "Cochin",
   },
   titleText: {
-    fontSize: 25,
+    fontSize: 20,
     fontStyle: "italic",
     fontWeight: "bold",
     color: "black",
