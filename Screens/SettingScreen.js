@@ -82,16 +82,12 @@ const Settingscreen = ({ navigation }) => {
   };
 
   const makeCards = () => {
-    if (localStorage.length - 2 < 1) {
+    if (localStorage.length - 3 < 1) {
       return (
-        <View style={styles.emptyDigestView}>
-          <Text style={styles.emptyDigest}>
-            Looks like you haven't saved anything.
-          </Text>
-          <Text style={styles.emptyDigest}>
-            Long press on a digest to save it!
-          </Text>
-        </View>
+        <Text style={styles.emptyDigest}>
+          Looks like you haven't saved anything.{"\n"}
+          Hold down on a digest to save a digest!.
+        </Text>
       );
     }
     return localStorage.map((digest, i) => {
@@ -304,20 +300,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
   },
   emptyDigest: {
+    textAlign: "center",
+    height: "100%",
     color: "grey",
-  },
-  emptyDigestView: {
-    //backgroundColor: "blue",
-    // alignItems: "center",
-    // marginLeft: windowWidth / 4,
-    // marginTop: "auto",
-    // marginBottom: "auto",
-    //marginLeft: windowWidth / 5,
-    //marginTop: windowWidth / 4,
-    //width: "100%",
-    alignSelf: "center",
     marginHorizontal: windowWidth / 5,
-    //alignItems: "center"
-    //padding: 10
+    marginTop: "25%",
+    marginBottom: "75%",
   },
 });
